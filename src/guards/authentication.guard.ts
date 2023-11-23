@@ -9,22 +9,22 @@ export class AuthenticationGuard implements CanActivate {
 
         try {
             const request = context.switchToHttp().getRequest();
-            // console.log("🚀 ~ REQUEST: ", request)
+            
 
 
-            // ⭐ LẤY TÁCH TOKEN RA KHỎI CHUỔI
+            
             const token = request.headers.authorization.split(' ')[1];
-            // console.log(token);
+            
 
 
             if (!token) {
                 throw new UnauthorizedException();
             }
-            // ⭐ GIẢI MÃ TOKEN RA
+            
             request.user = this.jwtService.verify(token);
-            // console.log(request.user)
+            
         } catch (error) {
-            console.log("🚀 ~ file: authentication.guard.ts:21 ~ AuthenticationGuard ~ canActivate ~ error:", error)
+            
             throw new UnauthorizedException();
         }
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { errorCode, failCode, successCode } from 'src/Config/response';
-// THƯ VIỆN MÃ HÓA PASSWORD
-// yarn add bcrypt
+
+
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 
@@ -18,9 +18,9 @@ export class UserService {
   model = new PrismaClient();
 
   
-  // ============================================
-  //   LẤY THÔNG TIN CHI TIẾT TẤT CẢ NGƯỜI DÙNG
-  // ============================================
+  
+  
+  
   async getInforAllUser(res: Response) {
     try {
       let data = await this.model.nguoiDung.findMany({
@@ -36,15 +36,15 @@ export class UserService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception) {
-      console.log("🚀 ~ file: user.service.ts:31 ~ UserService ~ getInforAllUser ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
   
 
-  // ============================================
-  // LẤY THÔNG TIN CHI TIẾT NGƯỜI DÙNG BY USER_ID
-  // ============================================
+  
+  
+  
   async getInfoUserByUserId(userId: string, res: Response) {
     try {
       let data = await this.model.nguoiDung.findFirst({
@@ -61,26 +61,26 @@ export class UserService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception) {
-      console.log("🚀 ~ file: user.service.ts:56 ~ UserService ~ getInfoUserByUserId ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
   
 
-  // ============================================
-  //    LẤY DANH SÁCH NGƯỜI DÙNG PHÂN TRANG
-  // ============================================
+  
+  
+  
   async getListUserPanigation(pageIndex: number, pageSize: number, res: Response) {
     try{
-      // 1, 2, 3
-      let index = (pageIndex - 1) * pageSize;  // =>0, 3, 6, 9
+      
+      let index = (pageIndex - 1) * pageSize;  
       if (index < 0){
         return failCode(res, '', 400, "pageIndex phải lớn hơn 0 !")
       }
 
       let data = await this.model.nguoiDung.findMany({
-        skip: +index,     // Sử dụng skip thay vì offset
-        take: +pageSize,  // Sử dụng take thay vì limit
+        skip: +index,     
+        take: +pageSize,  
         where: {
           isDelete: false,
         }
@@ -93,21 +93,21 @@ export class UserService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception){
-      console.log("🚀 ~ file: user.service.ts:85 ~ UserService ~ getListUserPanigation ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ============================================
-  //        TÌM TÊN NGƯỜI DÙNG THEO TÊN
-  // ============================================ 
+  
+  
+  
   async searchUserByName(userName: string, res: Response){
     try{
       let data = await this.model.nguoiDung.findMany({
         where:{
           ho_ten: {
-            contains: userName      // LIKE '%userName%'
+            contains: userName      
           },
           isDelete: false
         }
@@ -120,15 +120,15 @@ export class UserService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception){
-      console.log("🚀 ~ file: user.service.ts:111 ~ UserService ~ searchUserByName ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ========================================
-  //      POST THÊM 1 ẢNH CỦA USER
-  // ========================================
+  
+  
+  
   async uploadImg(file: Express.Multer.File, userID: number, body: FileUploadDto, res: Response) {
     try {
       let { email } = body
@@ -142,7 +142,7 @@ export class UserService {
       });
 
       if (checkUserID === null) {
-        fs.unlink(process.cwd() + "/public/img/" + file.filename, (err) => {    // xóa file ảnh theo đường dẫn nếu người dùng ko tồn tại
+        fs.unlink(process.cwd() + "/public/img/" + file.filename, (err) => {    
           if (err) {
             console.error("Error deleting file:", err);
           }
@@ -157,22 +157,22 @@ export class UserService {
         },
         data: {
           anh_dai_dien: file.filename,
-          // duong_dan: process.cwd() + "/public/img/" + file.filename,
+          
         }
       });
 
       successCode(res, file, 201, 'Thêm ảnh đại diện thành công !');
     }
     catch (exception) {
-      console.log("🚀 ~ file: user.service.ts:234 ~ UserService ~ uploadImg ~ exception:", exception)
+      
       errorCode(res, 'Lỗi BE !');
     }
   }
 
 
-  // ============================================
-  //             CẬP NHẬT NGƯỜI DÙNG 
-  // ============================================  
+  
+  
+  
   async updateUserById(userId: string, body: UserUpdateDto, res: Response){
     try{ 
       let {ho_ten, email, mat_khau, so_dien_thoai, ngay_sinh, gioi_tinh, tuoi} = body;
@@ -195,7 +195,7 @@ export class UserService {
         data: {
           ho_ten,
           email,
-          mat_khau: await bcrypt.hash(mat_khau, 10), //  thay đổi bcrypt.hashSync thành await bcrypt.hash để sử dụng hàm hash bất đồng bộ. Điều này cần thiết để tránh blocking thread chính khi mã hóa mật khẩu.
+          mat_khau: await bcrypt.hash(mat_khau, 10), 
           so_dien_thoai,
           ngay_sinh,
           gioi_tinh,
@@ -206,15 +206,15 @@ export class UserService {
       successCode(res, newData, 200, "Cập nhật thông tin thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: user.service.ts:166 ~ UserService ~ updateUserById ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE");
     }
   }
 
 
-  // ============================================
-  //                XÓA NGƯỜI DÙNG 
-  // ============================================
+  
+  
+  
   async deleteUserById(userId: string, res: Response){
     try{
       let data = await this.model.nguoiDung.findFirst({
@@ -240,7 +240,7 @@ export class UserService {
       successCode(res, data, 200, "Đã xóa người dùng thành công !")
     }
     catch (exception){
-      console.log("🚀 ~ file: user.service.ts:120 ~ UserService ~ deleteUserById ~ exception:", exception)
+      
       errorCode(res,"Lỗi BE")
     }
   }

@@ -18,3 +18,4 @@ EXPOSE 8080
 USER root
 
 CMD ["yarn","start"]
+# CMD ["node","start"]

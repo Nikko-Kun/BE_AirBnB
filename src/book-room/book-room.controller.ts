@@ -15,16 +15,13 @@ import { AuthorizationGuard } from 'src/guards/authorization.guard';
 
 
 @ApiBearerAuth()        
-// @UseGuards(AuthGuard("jwt"))
+
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 @ApiTags("DatPhong")
 @Controller('api/')
 export class BookRoomController {
   constructor(private readonly bookRoomService: BookRoomService) {}
 
-  // ============================================
-  //          GET ALL INFO BOOK ROOM
-  // ============================================
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Get("get-all-info-book-room")
@@ -32,10 +29,6 @@ export class BookRoomController {
     return this.bookRoomService.getAllInfoBookRoom(res)
   }
 
-
-  // ============================================
-  //    GET ALL INFO BOOK ROOM BY USER ID
-  // ============================================ 
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-all-info-book-room-by-user-id/:userID")
@@ -43,10 +36,6 @@ export class BookRoomController {
     return this.bookRoomService.getAllInfoBookRoomByUserId(userID, res)
   }
 
-
-  // ============================================
-  //     GET ALL INFO BOOK ROOM BY ROOM ID
-  // ============================================
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Get("get-all-info-book-room-by-room-id/:roomID")
@@ -54,10 +43,6 @@ export class BookRoomController {
     return this.bookRoomService.getAllInfoBookRoomByRoomId(roomID, res)
   }
 
-
-  // ============================================
-  //               POST BOOK ROOM
-  // ============================================
   @HttpCode(201)
   @Roles(Role.USER)
   @Post("post-book-room")
@@ -65,9 +50,6 @@ export class BookRoomController {
     return this.bookRoomService.postBookRoom(body, res)
   }
 
-  // ============================================
-  //               PUT BOOK ROOM
-  // ============================================
   @HttpCode(200)
   @Roles(Role.USER)
   @Put("put-book-room/:bookRoomID")
@@ -75,10 +57,6 @@ export class BookRoomController {
     return this.bookRoomService.putBookRoomById(bookRoomID, body, res)
   }
 
-
-  // ============================================
-  //      DELETE BOOK ROOM BY BOOK ROOM ID
-  // ============================================
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Delete("delete-book-room/:bookRoomID")

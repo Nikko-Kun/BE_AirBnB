@@ -17,7 +17,7 @@ import { Response } from 'express';
 
 
 @ApiBearerAuth()      
-// @UseGuards(AuthGuard("jwt"))
+
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 @ApiTags("NguoiDung")
 @Controller('api/user')
@@ -25,9 +25,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
 
-  // ============================================
-  // LẤY THÔNG TIN CHI TIẾT TẤT CẢ NGƯỜI DÙNG
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Get("get-info-all-user")
@@ -35,9 +35,9 @@ export class UserController {
     return this.userService.getInforAllUser(res)
   }
 
-  // ============================================
-  // LẤY THÔNG TIN CHI TIẾT NGƯỜI DÙNG BY USER_ID
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-info-user-by-user-id/:userId")
@@ -45,9 +45,9 @@ export class UserController {
     return this.userService.getInfoUserByUserId(userId, res)
   }
 
-  // ============================================
-  //    LẤY DANH SÁCH NGƯỜI DÙNG PHÂN TRANG
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-list-user-panigation/:pageIndex/:pageSize")
@@ -59,9 +59,9 @@ export class UserController {
     return this.userService.getListUserPanigation(pageIndex, pageSize, res)
   }
 
-  // ============================================
-  //        TÌM TÊN NGƯỜI DÙNG THEO TÊN
-  // ============================================ 
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("search-user-by-name/:userName")
@@ -70,22 +70,22 @@ export class UserController {
   }
 
 
-  // ============================================
-  //      CẬP NHẬT ẢNH ĐẠI DIỆN NGƯỜI DÙNG
-  // ============================================
+  
+  
+  
   @ApiConsumes('multipart/form-data')
-  // @ApiBody({ type: FileUploadDto })
+  
   @Roles(Role.ADMIN, Role.USER)
   @HttpCode(201)
   @Post("upload-avatar/:userID")
-  @UseInterceptors(FileInterceptor("hinhAnh",     // Tham số 1: key FE gửi lên
-    {                                             // Tham số 2: định nghĩa nơi lưu, và lưu tên mới cho file
+  @UseInterceptors(FileInterceptor("hinhAnh",     
+    {                                             
       storage: diskStorage({
         destination: process.cwd() + "/public/img",
-        filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) // null: tham số báo lỗi
+        filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) 
       })
     }
-  ))    // Sử dụng một middleware, cho phép chèn phía trước khi truy cập API
+  ))    
   uploadImg(
     @UploadedFile() file: Express.Multer.File,
     @Param("userID") userID: number,
@@ -96,9 +96,9 @@ export class UserController {
   }
 
 
-  // ============================================
-  //             CẬP NHẬT NGƯỜI DÙNG 
-  // ============================================  
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Put("update-user/:userId")
@@ -106,9 +106,9 @@ export class UserController {
     return this.userService.updateUserById(userId, body, res)
   }
 
-  // ============================================
-  //               XÓA NGƯỜI DÙNG 
-  // ============================================  
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Delete("delete-user/:userId")
@@ -118,9 +118,9 @@ export class UserController {
 
 
 
-  // Cách lấy biến môi trường nestjs
-  // @Get("/get-dotenv")
-  // getEnv() {
-  //   return this.configService.get("TITLE")
-  // }
+  
+  
+  
+  
+  
 }

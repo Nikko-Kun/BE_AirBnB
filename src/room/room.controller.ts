@@ -16,16 +16,16 @@ import { AuthenticationGuard } from 'src/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
 
 @ApiBearerAuth()
-// @UseGuards(AuthGuard("jwt"))
+
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 @ApiTags("Phong")
 @Controller('api/')
 export class RoomController {
   constructor(private readonly roomService: RoomService) { }
 
-  // ============================================
-  //                GET ALL ROOM
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-all-room")
@@ -33,9 +33,9 @@ export class RoomController {
     return this.roomService.getAllRoom(res)
   }
 
-  // ============================================
-  //             GET DETAIL ROOM ID
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-room-by-id/:roomID")
@@ -43,9 +43,9 @@ export class RoomController {
     return this.roomService.getDetailRoomId(roomID, res)
   }
 
-  // ============================================
-  //         GET LIST ROOM BY LOCATION ID
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-list-room-by-location-id/:locationID")
@@ -54,9 +54,9 @@ export class RoomController {
   }
 
 
-  // ============================================
-  //         GET PANIGATION LIST ROOM
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-panigation-room/:pageIndex/:pageSize")
@@ -68,9 +68,9 @@ export class RoomController {
     return this.roomService.getPanigationRoom(pageIndex, pageSize, res)
   }
 
-  // ============================================
-  //                POST ROOM
-  // ============================================
+  
+  
+  
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Post("post-room")
@@ -79,22 +79,22 @@ export class RoomController {
   }
 
 
-  // ============================================
-  //             UPLOAD ROOM IMAGE
-  // ============================================
+  
+  
+  
   @ApiConsumes('multipart/form-data')
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Post("upload-img-room/:roomID")
   @UseInterceptors(
-    FilesInterceptor("hinhAnh", 10,                // Tham số 1: key FE gửi lên, và số lượng tối đa hình gửi lên 
-      {                                             // Tham số 2: định nghĩa nơi lưu, và lưu tên mới cho file
+    FilesInterceptor("hinhAnh", 10,                
+      {
         storage: diskStorage({
           destination: process.cwd() + "/public/img",
-          filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) // null: tham số báo lỗi
+          filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) 
         })
       }
-    ))    // Sử dụng một middleware, cho phép chèn phía trước khi truy cập API
+    ))    
   uploadImgRoom(
     @UploadedFiles() files: Express.Multer.File[],
     @Param("roomID") roomID: number,
@@ -105,9 +105,9 @@ export class RoomController {
   }
 
 
-  // ============================================
-  //                PUT ROOM
-  // ============================================
+  
+  
+  
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Put("put-room/:roomID")
@@ -116,9 +116,9 @@ export class RoomController {
   }
 
 
-  // ============================================
-  //                DELETE ROOM
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Delete("delete-room/:roomID")

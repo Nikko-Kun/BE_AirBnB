@@ -17,16 +17,16 @@ import { AuthorizationGuard } from 'src/guards/authorization.guard';
 
 
 @ApiBearerAuth()
-// @UseGuards(AuthGuard("jwt"))
+
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 @ApiTags("ViTri")
 @Controller('api/')
 export class LocationController {
   constructor(private readonly locationService: LocationService) { }
 
-  // ============================================
-  //            GET ALL LOCATION
-  // ============================================ 
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-all-location")
@@ -34,9 +34,9 @@ export class LocationController {
     return this.locationService.getAllLocation(res)
   }
 
-  // ============================================
-  //         GET LOCATION DETAIL BY ID
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-loation-by-id/:locationID")
@@ -44,9 +44,9 @@ export class LocationController {
     return this.locationService.getLocationById(locationID, res)
   }
 
-  // ============================================
-  //         GET PANIGATION LOCATION
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-panigation-location/:pageIndex/:pageSize")
@@ -58,9 +58,9 @@ export class LocationController {
     return this.locationService.getPanigationLocation(pageIndex, pageSize, res)
   }
 
-  // ============================================
-  //                POST LOCATION
-  // ============================================
+  
+  
+  
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Post("post-location")
@@ -68,22 +68,22 @@ export class LocationController {
     return this.locationService.postLocation(body, res)
   }
 
-  // ============================================
-  //                POST IMG LOCATION
-  // ============================================
+  
+  
+  
   @ApiConsumes('multipart/form-data')
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Post("upload-img-location/:locationID")
   @UseInterceptors(
-    FilesInterceptor("hinhAnh", 10,                // Tham số 1: key FE gửi lên, và số lượng tối đa hình gửi lên 
-      {                                            // Tham số 2: định nghĩa nơi lưu, và lưu tên mới cho file
+    FilesInterceptor("hinhAnh", 10,                
+      {                                            
         storage: diskStorage({
           destination: process.cwd() + "/public/img",
-          filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) // null: tham số báo lỗi
+          filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname) 
         })
       }
-    ))    // Sử dụng một middleware, cho phép chèn phía trước khi truy cập API
+    ))    
   uploadImgRoom(
     @UploadedFiles() files: Express.Multer.File[],
     @Param("locationID") locationID: number,
@@ -94,9 +94,9 @@ export class LocationController {
   }
 
 
-  // ============================================
-  //                PUT LOCATION
-  // ============================================
+  
+  
+  
   @HttpCode(201)
   @Roles(Role.ADMIN)
   @Put("put-location/:locationID")
@@ -109,9 +109,9 @@ export class LocationController {
   }
 
 
-  // ============================================
-  //               DELETE LOCATION
-  // ============================================
+  
+  
+  
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Delete('delete-location/:locationID')

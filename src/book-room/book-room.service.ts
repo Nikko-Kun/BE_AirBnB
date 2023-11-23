@@ -10,10 +10,6 @@ export class BookRoomService {
 
   model = new PrismaClient();
 
-
-  // ============================================
-  //          GET ALL INFO BOOK ROOM
-  // ============================================
   async getAllInfoBookRoom(res: Response){
     try {
       let data = await this.model.datPhong.findMany({
@@ -29,15 +25,12 @@ export class BookRoomService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception){
-      console.log("🚀 ~ file: book-room.service.ts:31 ~ BookRoomService ~ getAllInfoBookRoom ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   };
 
 
-  // ============================================
-  //    GET ALL INFO BOOK ROOM BY USER ID
-  // ============================================ 
   async getAllInfoBookRoomByUserId(userID:number, res: Response){
     try{
       let data = await this.model.nguoiDung.findFirst({
@@ -61,15 +54,12 @@ export class BookRoomService {
       successCode(res, data, 200, "Thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: book-room.service.ts:63 ~ BookRoomService ~ getAllInfoBookRoomByUserId ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE !")
     }
   };
 
 
-  // ============================================
-  //     GET ALL INFO BOOK ROOM BY ROOM ID
-  // ============================================
   async getAllInfoBookRoomByRoomId(roomID:number, res:Response){
     try {
       let data = await this.model.phong.findFirst({
@@ -93,15 +83,13 @@ export class BookRoomService {
       successCode(res, data, 200, "Thành công !")
     }
     catch (exception){
-      console.log("🚀 ~ file: book-room.service.ts:95 ~ BookRoomService ~ getAllInfoBookRoomByRoomId ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE !")
     }
   }
 
 
-  // ============================================
-  //               POST BOOK ROOM
-  // ============================================
+  
   async postBookRoom(body: CreateBookRoomDto, res: Response){
     try{
       let {phong_id, nguoi_dung_id, ngay_den, ngay_di, so_luong_khach} = body;
@@ -135,15 +123,13 @@ export class BookRoomService {
       successCode(res, body, 201, "Đặt phòng thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: book-room.service.ts:138 ~ BookRoomService ~ postBookRoom ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ============================================
-  //               PUT BOOK ROOM
-  // ============================================
+  
   async putBookRoomById(bookRoomID: number, body: CreateBookRoomDto, res: Response){
     try{
       let {phong_id, nguoi_dung_id, ngay_den, ngay_di, so_luong_khach} = body;
@@ -180,15 +166,13 @@ export class BookRoomService {
       successCode(res, body, 200, "Sử thông tin đặt phòng thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: book-room.service.ts:183 ~ BookRoomService ~ putBookRoomById ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ============================================
-  //              DELETE BOOK ROOM 
-  // ============================================
+  
   async deleteBookRoomById(bookRoomID: number, res: Response){
     try{
 
@@ -216,7 +200,7 @@ export class BookRoomService {
       successCode(res, checkBookRoom, 200, "Xóa đặt phòng thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: book-room.service.ts:219 ~ BookRoomService ~ deleteBookRoomById ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }

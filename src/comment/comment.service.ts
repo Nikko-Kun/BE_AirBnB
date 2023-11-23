@@ -13,9 +13,7 @@ export class CommentService {
   model = new PrismaClient();
 
 
-  // ============================================
-  //            GET ALL BÌNH LUẬN
-  // ============================================ 
+  
   async getAllComment(res: Response){
     try{
       let data = await this.model.binhLuan.findMany({
@@ -31,15 +29,13 @@ export class CommentService {
       successCode(res, data, 200, "Thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:33 ~ CommentService ~ getAllComment ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE !")
     }
   };
 
 
-  // ============================================
-  //         GET BÌNH LUẬN BY USER ID
-  // ============================================ 
+  
   async getCommentByUserId(userID:number, res: Response){
     try{
       let data = await this.model.nguoiDung.findFirst({
@@ -63,15 +59,15 @@ export class CommentService {
       successCode(res, data, 200, "Thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:61 ~ CommentService ~ getCommentByUserId ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE !")
     }
   };
 
 
-  // ============================================
-  //         GET COMMENT BY ROOM ID
-  // ============================================ 
+  
+  
+  
   async getCommentByRoomId(roomID:number, res: Response){
     try{
       let data = await this.model.phong.findFirst({
@@ -95,15 +91,15 @@ export class CommentService {
       successCode(res, data, 200, "Thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:61 ~ CommentService ~ getCommentByUserId ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE !")
     }
   };
 
 
-  // ============================================
-  //               POST COMMENT 
-  // ============================================
+  
+  
+  
   async postComment(body: CreateCommentDto, res: Response){
     try{
       let {phong_id, nguoi_dung_id, ngay_binh_luan, noi_dung, sao_binh_luan} = body;
@@ -137,15 +133,15 @@ export class CommentService {
       successCode(res, body, 201, "Thêm bình luận thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:140 ~ CommentService ~ postComment ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ============================================
-  //               PUT COMMENT 
-  // ============================================
+  
+  
+  
   async putComment(commentID: number, body: CreateCommentDto, res: Response){
     try{
       let {phong_id, nguoi_dung_id, ngay_binh_luan, noi_dung, sao_binh_luan} = body;
@@ -182,15 +178,15 @@ export class CommentService {
       successCode(res, body, 200, "Cập nhật bình luận thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:185 ~ CommentService ~ putComment ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }
 
 
-  // ============================================
-  //                DELETE COMMENT 
-  // ============================================
+  
+  
+  
   async deleteComment(commentID: number, res: Response){
     try{
 
@@ -218,7 +214,7 @@ export class CommentService {
       successCode(res, checkCmtID, 200, "Xóa bình luận thành công !")
     }
     catch(exception){
-      console.log("🚀 ~ file: comment.service.ts:221 ~ CommentService ~ deleteComment ~ exception:", exception)
+      
       errorCode(res, "Lỗi BE")
     }
   }

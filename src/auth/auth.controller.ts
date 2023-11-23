@@ -12,18 +12,12 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  // =============================================
-  //                  ĐĂNG NHẬP
-  // =============================================
   @HttpCode(200)
   @Post("/signin")
   signIn(@Body() body: UserSignInDto, @Res() res: Response) {
     return this.authService.signIn(body, res);
   }
 
-  // =============================================
-  //                  ĐĂNG KÝ
-  // =============================================
   @HttpCode(201)
   @Post("/signup")
   signUp(@Body() body: UserSignUpType, @Res() res: Response) {

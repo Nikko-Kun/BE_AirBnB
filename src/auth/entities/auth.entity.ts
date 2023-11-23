@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger"
 
 export class UserSignUpType {
-    // @ApiProperty()
+    
     nguoi_dung_id: number
-    // @ApiProperty()
+    
     vai_tro_id: number
     @ApiProperty()
     ho_ten:string
@@ -21,6 +21,6 @@ export class UserSignUpType {
     gioi_tinh:string
     @ApiProperty()
     tuoi: number
-    // @ApiProperty()
+    
     isDelete: boolean
 }

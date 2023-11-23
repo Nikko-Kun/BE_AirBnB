@@ -15,16 +15,14 @@ import { AuthorizationGuard } from 'src/guards/authorization.guard';
 
 
 @ApiBearerAuth()        
-// @UseGuards(AuthGuard("jwt"))
+
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 @ApiTags("BinhLuan")
 @Controller('api/')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  // ============================================
-  //            GET ALL COMMENT
-  // ============================================ 
+  
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Get("get-all-comment")
@@ -33,9 +31,7 @@ export class CommentController {
   }
 
 
-  // ============================================
-  //         GET COMMENT BY USER ID
-  // ============================================ 
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-all-comment-by-user-id/:userID")
@@ -44,9 +40,7 @@ export class CommentController {
   }
 
 
-  // ============================================
-  //         GET COMMENT BY ROOM ID
-  // ============================================ 
+  
   @HttpCode(200)
   @Roles(Role.ADMIN, Role.USER)
   @Get("get-all-comment-by-room-id/:roomID")
@@ -55,9 +49,7 @@ export class CommentController {
   }
 
 
-  // ============================================
-  //               POST COMMENT 
-  // ============================================
+  
   @HttpCode(201)
   @Roles(Role.USER)
   @Post("post-comment")
@@ -66,9 +58,7 @@ export class CommentController {
   }
 
 
-  // ============================================
-  //               PUT COMMENT 
-  // ============================================
+
   @HttpCode(200)
   @Roles(Role.USER)
   @Put("put-comment/:commentID")
@@ -77,9 +67,7 @@ export class CommentController {
   }
 
 
-  // ============================================
-  //               DELETE COMMENT 
-  // ============================================
+
   @HttpCode(200)
   @Roles(Role.ADMIN)
   @Delete("delete-comment/:commentID")

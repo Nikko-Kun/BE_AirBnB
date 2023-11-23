@@ -1,4 +1,4 @@
-// success => 200, 201
+
 const successCode = (res, content, statusCode, message) => {
     res.status(statusCode).json({
         message,
@@ -8,7 +8,7 @@ const successCode = (res, content, statusCode, message) => {
     })
 }
 
-// fail => 400, 401, 404
+
 const failCode = (res, content, statusCode, message) => {
     res.status(statusCode).json({
         message,
@@ -18,7 +18,7 @@ const failCode = (res, content, statusCode, message) => {
     })
 }
 
-// error => 500
+
 const errorCode = (res, message) => {
     res.status(500).json({
         message,
